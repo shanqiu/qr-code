@@ -1,0 +1,24 @@
+<!-- views/profile.ejs -->
+<!doctype html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+		<h1>用户页</h1>
+		<a href="/logout" >登出</a>
+				<h3>本地</h3>
+				<p>
+					<strong>id</strong>: <%= user._id %><br>
+					<strong>email</strong>: <%= user.local.email %><br>
+					<strong>password</strong>: <%= user.local.password %>
+				</p>
+				<% if (project.user_email.length > 0) { %>
+					<strong>id</strong>:<div id = "id"> <%= project._id %></div><br>
+					<strong>wechat</strong>: <div id = "wechat_link"><%= project.wechat_link %></div><br>
+				<% } %>
+	
+		
+
+</body>
+</html>
