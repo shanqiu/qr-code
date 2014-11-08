@@ -5,8 +5,9 @@ var ownerSchema = new Schema({
     wechat_link : String, 
     ios_link : String, 
     android_link : String,
+    default_link : String,
     user_email:String,
-    url_id:String
+    project_name:String
 });
 // export them 
 module.exports = mongoose.model('Owner', ownerSchema);

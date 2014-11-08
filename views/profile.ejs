@@ -5,20 +5,32 @@
 	<title></title>
 </head>
 <body>
-		<h1>用户页</h1>
-		<a href="/logout" >登出</a>
-				<h3>本地</h3>
-				<p>
-					<strong>id</strong>: <%= user._id %><br>
-					<strong>email</strong>: <%= user.local.email %><br>
-					<strong>password</strong>: <%= user.local.password %>
-				</p>
-				<% if (project.user_email.length > 0) { %>
-					<strong>id</strong>:<div id = "id"> <%= project._id %></div><br>
-					<strong>wechat</strong>: <div id = "wechat_link"><%= project.wechat_link %></div><br>
-				<% } %>
-	
-		
+	<h1>个人主页</h1>
+	<a href="/logout" >登出</a>
+	<h3>用户信息</h3>
+	<p>
+		<strong>id</strong>: <%= user._id %><br>
+		<strong>email</strong>: <%= user.local.email %><br>
+		<strong>password</strong>: <%= user.local.password %>
+	</p>
+	<h3>项目信息</h3>
 
+	<% if ( flock.length > 0 ) { %>
+		<% for(var i=0; i<flock.length; i++) { %>
+			<strong>项目名称</strong>:<div id = "id"> <%= flock[i].project_name %></div><br>
+			<strong>id</strong>:<div id = "id"> <%= flock[i]._id %></div><br>
+			<strong>wechat</strong>: <div id = "wechat_link"><%= flock[i].wechat_link %></div><br>
+			<strong>default</strong>: <div id = "default_link"><%= flock[i].default_link %></div><br>
+			<strong>ios</strong>:<div id = "id"> <%= flock[i].ios_link %></div><br>
+			<strong>android</strong>:<div id = "id"> <%= flock[i].android_link %></div><br>
+			<strong>项目位置</strong>: <div id = "project_link">
+			<a href='/project/<%= flock[i]._id %>' ><%= flock[i]._id %></a>
+			</div><br>
+			<a href='/modify/<%= flock[i]._id %>'>修改</a>
+			<br>
+			<div >————————————————————————————————————————————————————————</div>
+		<% } %>
+	<% } %>
+	<a href="/setting" >添加项目</a>
 </body>
 </html>

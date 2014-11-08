@@ -1,11 +1,9 @@
-<!-- views/profile.ejs -->
-<!doctype html>
-<html>
+<!-- views/project.ejs -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" en="lang">
 <head>
 	<title></title>
 	<script>
-	<% console.log(project.wechat_link);%>
-	<% res.redirect(project.wechat_link); %>
 
           var isMobile = {
               Android: function() {
@@ -28,46 +26,26 @@
               }
 
           };
-
+          console.log("oooo");
           var is_weixn = function(){
 
           var ua = navigator.userAgent.toLowerCase();
 
             if(ua.match(/MicroMessenger/i)=="micromessenger") {
-
-            document.location.href = "http://www.baidu.com";
-
-            console.log("weixin");
+            document.location.href="http://www.google.com";
             return true;
-
-            } else {  
-            console.log("noweixin");    
-              if ( isMobile.Android() ) {
-                      document.location.href = "http://www.bingying.com";
-                  }
-              else if(isMobile.iOS())
-              {
-              document.location.href="http://www.google.com";
-              }else{
-
-              
-              }
-            return false;
-
+            }else{
+            document.location.href = "<%= project.default_link %>" ;
             }
-
-          };
-
+          }
           is_weixn();
-
     </script>
 </head>
 <body>
-
-		<h1>产品</h1>
-				<p>
-						<strong>id</strong>:<div id = "id"> <%= project._id %></div><br>
-						<strong>wechat</strong>: <div id = "wechat_link"><%= project.wechat_link %></div><br>						
-				</p>
+	<h1>产品</h1>
+	<p>
+			<strong>id</strong>:<div id = "id"> <%= project._id %></div><br>
+			<strong>wechat</strong>: <div id = "wechat_link"><%= project.wechat_link %></div><br>						
+	</p>
 </body>
 </html>

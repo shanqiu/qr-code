@@ -49,12 +49,12 @@ module.exports = function(app, passport) {
 	// we will want this protected so you have to be logged in to visit
 	// we will use route middleware to verify this (the isLoggedIn function)
 	app.get('/profile', isLoggedIn, function(req, res) {
-        Owner.find({ user_email : req.user.local.email }, function(err, doc) { 
-            console.log("aow"+doc[0].user_email.length);
+        Owner.find({ user_email : req.user.local.email }, function(err, doc) {
             res.render('profile.ejs', {
+            // link : project_link,
             user : req.user,
             req : req, res : res,
-            project : doc[0] // get the user out of session and pass to template
+            flock : doc// get the user out of session and pass to template
             });
         });
 	});
@@ -67,16 +67,48 @@ module.exports = function(app, passport) {
 		var owner = new Owner({ 
         wechat_link : req.body.wechat_link, 
         ios_link : req.body.ios_link,
-        user_email : req.body.user_email
+        default_link : req.body.default_link,
+        android_link : req.body.android_link,
+        project_name : req.body.project_name,
+        user_email : req.user.local.email
     	});
 		owner.save(); 
 		res.redirect('/profile');
 	});
 
+	app.get('/destroy/:project', isLoggedIn, function(req, res) {
+		Owner.find({ _id : req.params.project }).remove().exec();
+        res.redirect( '/profile' );
+	});
+
+	app.get('/modify/:project', isLoggedIn, function(req, res) {
+		Owner.find({ _id : req.params.project }, function(err, doc) {
+            // var project_link = '/project/'+doc[0]._id;
+            res.render('modify.ejs', {
+            req : req, res : res,
+            project : doc[0]// get the user out of session and pass to template
+            });
+        });
+	});
+	app.post('/modify/:project', isLoggedIn, function(req, res) {
+		Owner.find({ _id : req.params.project }, function(err, doc) { 
+			doc[0].wechat_link = req.body.wechat_link; 
+        	doc[0].ios_link = req.body.ios_link;
+	        doc[0].default_link = req.body.default_link;
+	        doc[0].android_link = req.body.android_link;
+	        doc[0].project_name = req.body.project_name;
+        	doc[0].save();
+        	res.render('modify.ejs', {
+	        req : req, res : res,
+			project : doc[0] // get the user out of session and pass to template
+			});
+    	});
+		res.redirect('back');
+	});
+
 	app.get('/project/:project', function(req, res) {
 
 	Owner.find({ _id : req.params.project }, function(err, doc) { 
-        console.log("aow"+doc);
         res.render('project.ejs', {
         req : req, res : res,
 		project : doc[0] // get the user out of session and pass to template
